@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(logger);
 // const DATABASE_URI = process.env.DATABASE_URI;
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 app.get("/", async (req, res) => {
   res.json({ message: "Hello Pinecone" });
 });
