@@ -1,9 +1,10 @@
 const express = require("express");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const colors = require("colors");
 // const multer = require("multer");
-const upload = require("./uploads/upload");
-dotenv.config();
+const upload = require("./middlewares/upload");
+const cloudinary = require("./utils/cloudinary");
+const error = require("./middlewares/error");
 
 // const upload = multer({ dest: "uploads/" });
 const PORT = process.env.PORT;
@@ -25,11 +26,20 @@ app.get("/", async (req, res) => {
   res.json({ message: "Hello Pinecone" });
 });
 
-app.post("/upload", upload.single("image"), (req, res) => {
+app.post("/upload", upload.single("image"), async (req, res) => {
   console.log("REQ", req.file);
-  res.status(200).json({ message: "SUCCESS", 
-  imgUrl: `${req.protocol}://${req.hostname}:${PORT}/${req.file.path}` });
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    res.status(200).json({
+      message: "SUCCESS",
+      imgUrl: result.secure_url,
+    });
+  } catch (err) {
+    console.log("ER--------", err);
+  }
 });
+
+app.use(error);
 connectDB();
 app.listen(PORT, () => {
   console.log(`Server ${PORT} aslaa`.gray);

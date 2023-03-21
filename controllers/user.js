@@ -1,37 +1,44 @@
 const User = require("../Model/User");
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
-    res.status(200).json({ message: "Hereglgchin medeelel oldloo", users });
+    if (!users) {
+      res.status(200).json({ message: "Hereglgchin medeelel oldloo", users });
+    }
   } catch (err) {
-    res.status(400).json({ message: "Aldaa garlaa" });
+    next(err);
+    // res.status(400).json({ message: "Aldaa garlaa" });
   }
 };
-const getUser = async (req, res) => {
+const getUser = async (req, res, next) => {
   const id = req.params.id;
   if (!id) {
-    return res.status(400).json({
+    res.status(400).json({
       message: `${id} herlegchin medeelel oldsongui`,
       err: err.message,
     });
   }
   try {
     const user = await User.findById(id);
-    res.status(200).json({ message: "user medeelel ilgeegdlee", user });
+    if (!user) {
+      res.status(201).json({ message: "user medeelel ilgeegdlee", user });
+    }
   } catch (err) {
-    res.status(400).json({
-      message: `${id} herlegchin medeelel oldsongui`,
-      err: err.message,
-    });
+    next(err);
+    // res.status(400).json({
+    //   message: `${id} herlegchin medeelel oldsongui`,
+    //   err: err.message,
+    // });
   }
 };
 
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;
-  if (!name || !email || !password) {
-    res.status(400).json({ message: "Ner , email, password bhgui bna" });
-  }
   try {
+    if (!name || !email || !password) {
+      res.status(400).json({ message: "Ner , email, password bhgui bna" });
+    }
+
     const user = await User.create({
       name,
       email,
@@ -39,9 +46,10 @@ const createUser = async (req, res) => {
     });
     res.status(201).json({ message: "SUCCESS", user });
   } catch (err) {
-    res
-      .status(400)
-      .json({ message: "Ner , email, password bhgui bna", err: err.message });
+    next(err);
+    // res
+    //   .status(400)
+    //   .json({ message: "Ner , email, password bhgui bna", err: err.message });
   }
 };
 
@@ -57,10 +65,11 @@ const deleteUser = async (req, res) => {
     const user = await User.findByIdAndDelete(id);
     res.status(200).json({ message: "Medeelel ustgagdlaa", user });
   } catch (err) {
-    res.status(400).json({
-      message: `Aldaa`,
-      err: err.message,
-    });
+    next(err);
+    // res.status(400).json({
+    //   message: `Aldaa`,
+    //   err: err.message,
+    // });
   }
 };
 const updateUser = async (req, res) => {
@@ -75,10 +84,11 @@ const updateUser = async (req, res) => {
     const user = await User.findByIdAndUpdate(id, req.body, { new: true });
     res.status(200).json({ message: "Medeelel shinechlgdlee", user });
   } catch (err) {
-    res.status(400).json({
-      message: `Aldaa`,
-      err: err.message,
-    });
+    next(err);
+    // res.status(400).json({
+    //   message: `Aldaa`,
+    //   err: err.message,
+    // });
   }
 };
 
