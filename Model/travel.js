@@ -5,7 +5,7 @@ const travelSchema = new mongoose.Schema({
     required: [true, "Aylalin nerig zaawal oruulna uu?"],
   },
   images: {
-    type: Text,
+    type: String,
     require: [true, "URL oruulna uu"],
   },
   detail: {
@@ -19,3 +19,6 @@ const travelSchema = new mongoose.Schema({
   day: Number,
   cat_id: String,
 });
+
+const travel = mongoose.model("Travel", travelSchema);
+module.exports = travel;

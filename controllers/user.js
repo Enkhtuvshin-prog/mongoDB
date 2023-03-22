@@ -3,8 +3,10 @@ const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
     if (!users) {
-      res.status(200).json({ message: "Hereglgchin medeelel oldloo", users });
+      res.status(200).json({ message: "Hereglgchin medeelel oldsngui", users });
     }
+    res.status(200).json({ message: "Hereglgchin medeelel oldloo", users });
+
   } catch (err) {
     next(err);
     // res.status(400).json({ message: "Aldaa garlaa" });
@@ -21,8 +23,10 @@ const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(id);
     if (!user) {
-      res.status(201).json({ message: "user medeelel ilgeegdlee", user });
+      res.status(400).json({ message: "user medeelel oldsngui", user });
     }
+    res.status(200).json({ message: "user medeelel ilgeegdlee", user });
+
   } catch (err) {
     next(err);
     // res.status(400).json({
@@ -32,7 +36,7 @@ const getUser = async (req, res, next) => {
   }
 };
 
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
     if (!name || !email || !password) {
@@ -53,7 +57,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   const { id } = req.params;
   if (!id) {
     res.status(400).json({
@@ -72,7 +76,7 @@ const deleteUser = async (req, res) => {
     // });
   }
 };
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
   const { id } = req.params;
   if (!id) {
     res.status(400).json({
