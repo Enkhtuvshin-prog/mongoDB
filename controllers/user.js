@@ -6,7 +6,6 @@ const getAllUsers = async (req, res, next) => {
       res.status(200).json({ message: "Hereglgchin medeelel oldsngui", users });
     }
     res.status(200).json({ message: "Hereglgchin medeelel oldloo", users });
-
   } catch (err) {
     next(err);
     // res.status(400).json({ message: "Aldaa garlaa" });
@@ -26,7 +25,6 @@ const getUser = async (req, res, next) => {
       res.status(400).json({ message: "user medeelel oldsngui", user });
     }
     res.status(200).json({ message: "user medeelel ilgeegdlee", user });
-
   } catch (err) {
     next(err);
     // res.status(400).json({
@@ -95,5 +93,26 @@ const updateUser = async (req, res, next) => {
     // });
   }
 };
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
 
-module.exports = { createUser, getAllUsers, getUser, deleteUser, updateUser };
+  const user = await User.find({ email, password });
+  try {
+    if (!user.length) {
+      res.status(400).json({ message: `email, password buruu bna`, user });
+      return;
+    }
+    res.status(200).json({ message: `Amjilttai newterlee `, user });
+  } catch {
+    next(err);
+  }
+};
+
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUser,
+  deleteUser,
+  updateUser,
+  login,
+};

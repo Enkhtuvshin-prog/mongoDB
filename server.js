@@ -14,7 +14,7 @@ const connectDB = require("./config/mongoDb.js");
 const logger = require("./Logger");
 const userRoutes = require("./Routes/user");
 const categoryRoutes = require("./Routes/category");
-const travelRoutes = require("./Routes/travel")
+const travelRoutes = require("./Routes/travel");
 //instance of express
 const app = express();
 //middlewares
