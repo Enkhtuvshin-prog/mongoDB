@@ -8,10 +8,10 @@ const getAllCategory = async (req, res, next) => {
     // res.status(400).json({ message: "Aldaa garlaa" });
   }
 };
-const getCategory = async (req, res) => {
+const getCategory = async (req, res, next) => {
   const id = req.params.id;
   if (!id) {
-     res.status(400).json({
+    res.status(400).json({
       message: `${id} category medeelel oldsongui`,
       err: err.message,
     });
@@ -29,7 +29,7 @@ const getCategory = async (req, res) => {
   }
 };
 
-const createCategory = async (req, res) => {
+const createCategory = async (req, res, next) => {
   const { title, description, categoryImg } = req.body;
   if (!title || !description || !categoryImg) {
     res
@@ -53,7 +53,7 @@ const createCategory = async (req, res) => {
   }
 };
 
-const deleteCategory = async (req, res) => {
+const deleteCategory = async (req, res, next) => {
   const { id } = req.params;
   if (!id) {
     res.status(400).json({
@@ -73,7 +73,7 @@ const deleteCategory = async (req, res) => {
     // });
   }
 };
-const updateCategory = async (req, res) => {
+const updateCategory = async (req, res, next) => {
   const { id } = req.params;
   if (!id) {
     res.status(400).json({

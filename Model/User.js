@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  password: String,
+  password: { type: String, select: false },
   profileImg: String,
   role: {
     type: String,
