@@ -99,25 +99,25 @@ const updateUser = async (req, res, next) => {
 };
 const login = async (req, res, next) => {
   // const { email, password } = req.body;
-
-  const user = await User.findOne({ email: req.body.email }).select(
-    "+password"
-  );
+console.log(req.body);
   try {
-    if (!user.length) {
+
+    const user = await User.findOne({ email: req.body.email }).select(
+      "+password");
+      console.log("user==", user)
+    if (!user) {
       res.status(400).json({ message: `email, password buruu bna`, user });
-      return;
     }
     const checkPass = bcrypt.compareSync(req.body.password, user.password);
     if (!checkPass) {
       res.status(400).json({ message: `email, password buruu bna`, user });
     }
-    const { _id, name, email, role } = user;
-    const token = jwt.sign({ _id, name, email, role }, process.env.JWT_SECRET, {
+    const {password, _id, name, email, role } = user;
+    const token = jwt.sign({ _id, name, email, role }, process.env.JWT_SECRET_KEY, {
       expiresIn: 36000,
     });
     res.status(200).json({ message: `Amjilttai newterlee `, user, token });
-  } catch {
+  } catch(err) {
     next(err);
   }
 };
