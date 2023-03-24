@@ -99,12 +99,12 @@ const updateUser = async (req, res, next) => {
 };
 const login = async (req, res, next) => {
   // const { email, password } = req.body;
-console.log(req.body);
+  console.log(req.body, "--");
   try {
-
     const user = await User.findOne({ email: req.body.email }).select(
-      "+password");
-      console.log("user==", user)
+      "+password"
+    );
+    console.log("user==", user);
     if (!user) {
       res.status(400).json({ message: `email, password buruu bna`, user });
     }
@@ -112,12 +112,16 @@ console.log(req.body);
     if (!checkPass) {
       res.status(400).json({ message: `email, password buruu bna`, user });
     }
-    const {password, _id, name, email, role } = user;
-    const token = jwt.sign({ _id, name, email, role }, process.env.JWT_SECRET_KEY, {
-      expiresIn: 36000,
-    });
+    const { _id, name, email, role } = user;
+    const token = jwt.sign(
+      { _id, name, email, role },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: 36000,
+      }
+    );
     res.status(200).json({ message: `Amjilttai newterlee `, user, token });
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 };
@@ -134,7 +138,7 @@ const register = async (req, res, next) => {
       phone,
     });
     res.status(200).json({ message: `Amjilttai newterlee `, user });
-  } catch {
+  } catch (err) {
     next(err);
   }
 };
