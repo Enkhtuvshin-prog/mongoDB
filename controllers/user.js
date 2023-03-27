@@ -106,11 +106,11 @@ const login = async (req, res, next) => {
     );
     console.log("user==", user);
     if (!user) {
-      res.status(400).json({ message: `email, password buruu bna`, user });
+      res.status(400).json({ message: `email, password buruu bna???`, user });
     }
     const checkPass = bcrypt.compareSync(req.body.password, user.password);
     if (!checkPass) {
-      res.status(400).json({ message: `email, password buruu bna`, user });
+      res.status(400).json({ message: `email, password buruu bna` });
     }
     const { _id, name, email, role } = user;
     const token = jwt.sign(
@@ -137,7 +137,7 @@ const register = async (req, res, next) => {
       password: hashedPassword,
       phone,
     });
-    res.status(200).json({ message: `Amjilttai newterlee `, user });
+    res.status(200).json({ message: `Amjilttai burtgegdlee `, user });
   } catch (err) {
     next(err);
   }

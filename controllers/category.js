@@ -30,7 +30,7 @@ const getCategory = async (req, res, next) => {
 };
 
 const createCategory = async (req, res, next) => {
-  const { title, description, categoryImg } = req.body;
+  const { title, description, categoryImg , categoryRating} = req.body;
   if (!title || !description || !categoryImg) {
     res
       .status(400)
@@ -41,6 +41,7 @@ const createCategory = async (req, res, next) => {
       title,
       description,
       categoryImg,
+      categoryRating
     });
     res.status(201).json({ message: "SUCCESS", category });
   } catch (err) {
