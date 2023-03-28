@@ -9,13 +9,17 @@ const {
   register,
 } = require("../controllers/user");
 
-const {checkRole, authorization }= require("../utils/checkRole");
+// const { checkRole, authorization } = require("../utils/auth");
+const { checkRole, authorization } = require("../middlewares/auth");
 const router = express.Router();
 router.route("/login").post(login);
 router.route("/register").post(register);
-router.route("/").post(checkRole, createUser).get(checkRole, authorization("User"),  getAllUsers);
+router
+  .route("/")
+  .post(checkRole, createUser)
+  .get(checkRole, authorization("User"), getAllUsers);
 router.get("/:id", getUser);
-router.delete("/:id",authorization,  deleteUser);
+router.delete("/:id", authorization, deleteUser);
 router.put("/:id", updateUser);
 
 module.exports = router;

@@ -30,7 +30,7 @@ const getCategory = async (req, res, next) => {
 };
 
 const createCategory = async (req, res, next) => {
-  const { title, description, categoryImg , categoryRating} = req.body;
+  const { title, description, categoryImg, categoryRating } = req.body;
   if (!title || !description || !categoryImg) {
     res
       .status(400)
@@ -41,7 +41,7 @@ const createCategory = async (req, res, next) => {
       title,
       description,
       categoryImg,
-      categoryRating
+      categoryRating,
     });
     res.status(201).json({ message: "SUCCESS", category });
   } catch (err) {
@@ -58,7 +58,7 @@ const deleteCategory = async (req, res, next) => {
   const { id } = req.params;
   if (!id) {
     res.status(400).json({
-      message: `${id} herlegchin medeelel oldsngui`,
+      message: `${id} category medeelel oldsngui`,
       err: err.message,
     });
   }
